@@ -1,0 +1,7 @@
+{
+  "name": "leet-code",
+  "devDependencies": {
+    "ts-node": "^10.0.0",
+    "typescript": "^4.3.2"
+  }
+}
