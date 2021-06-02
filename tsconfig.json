@@ -16,8 +16,8 @@
     /* Advanced Options */
     "forceConsistentCasingInFileNames": true,
     "skipLibCheck": true,
+    "sourceMap": true,
+    "outDir": "./dist"
   },
-  "include": [
-    "./src"
-  ]
+  "include": ["./src"]
 }
