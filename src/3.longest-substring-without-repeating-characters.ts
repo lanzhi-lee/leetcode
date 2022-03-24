@@ -25,56 +25,36 @@
 // 0 <= s.length <= 5 * 104
 // s 由英文字母、数字、符号和空格组成
 
-// 队列实现
-function lengthOfLongestSubstring(str: string): number {
-  if (!str) return 0
+// 滑动窗口
+function lengthOfLongestSubstring(s: string): number {
+  if (s.length == 0) return 0;
 
-  let result: string[] = [str[0]]
+  const charMap: { [key: string]: number } = {}
 
-  for (let index = 1; index < str.length; index++) {
-    const char = str[index]
+  let max = 0
+  let left = 0
 
-    // result中是否已存在当前字符
-    if (result.includes(char)) {
-      // result的长度大于等于剩余字符的长度时，直接结束
-      // if (result.length >= str.length - index + 1) break
-      // 否则 result 置空
-      // else
-      result = result.slice(result.indexOf(char) + 1)
-    }
+  for (let index = 0; index < s.length; index++) {
+    const char = s[index]
 
-    result.push(char)
+    if (charMap.hasOwnProperty(char)) left = Math.max(left, charMap[char] + 1);
+
+    charMap[char] = index
+
+    max = Math.max(max, index - left + 1);
   }
 
-  return result.length
+  return max;
 }
 
-;(function test() {
-  console.log('expect:', 3, lengthOfLongestSubstring('abcabcbb'))
-  console.log('expect:', 1, lengthOfLongestSubstring('bbbbb'))
-  console.log('expect:', 3, lengthOfLongestSubstring('pwwkew'))
+; (function test() {
   console.log('expect:', 0, lengthOfLongestSubstring(''))
+  console.log('expect:', 1, lengthOfLongestSubstring('a'))
+  console.log('expect:', 2, lengthOfLongestSubstring('ab'))
   console.log('expect:', 2, lengthOfLongestSubstring('aab'))
+  console.log('expect:', 1, lengthOfLongestSubstring('bbbbb'))
+  console.log('expect:', 5, lengthOfLongestSubstring('abcdeb'))
+  console.log('expect:', 3, lengthOfLongestSubstring('pwwkew'))
   console.log('expect:', 3, lengthOfLongestSubstring('dvdf'))
   console.log('expect:', 5, lengthOfLongestSubstring('anviaj'))
 })()
-
-// public int lengthOfLongestSubstring(String s) {
-//   // 记录字符上一次出现的位置
-//   int[] last = new int[128];
-//   for(int i = 0; i < 128; i++) {
-//       last[i] = -1;
-//   }
-//   int n = s.length();
-
-//   int res = 0;
-//   int start = 0; // 窗口开始位置
-//   for(int i = 0; i < n; i++) {
-//       int index = s.charAt(i);
-//       start = Math.max(start, last[index] + 1);
-//       res   = Math.max(res, i - start + 1);
-//       last[index] = i;
-//   }
-
-//   return res;
-// }
